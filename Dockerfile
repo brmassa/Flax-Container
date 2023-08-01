@@ -1,6 +1,7 @@
 # Use Ubuntu LTS as the base image
 FROM ubuntu:22.04
 
+RUN apt-get update && apt-get install -y gnupg
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C
 
 # Install required dependencies
