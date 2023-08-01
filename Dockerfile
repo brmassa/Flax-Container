@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     libcurl4-gnutls-dev
 
 # Install .NET SDK 7.0
-RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
+RUN wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
     && add-apt-repository universe \
     && apt-get update \
