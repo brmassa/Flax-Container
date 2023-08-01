@@ -12,10 +12,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     libcurl4-gnutls-dev
 
-# Add missing repository keys for the repositories giving NO_PUBKEY errors
-RUN gpg --batch --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C \
-    && gpg --batch --export --armor 871920D1991BC93C | apt-key add -
-
 # Install .NET SDK 7.0
 RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
