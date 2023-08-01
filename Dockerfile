@@ -1,11 +1,8 @@
 # Use Ubuntu LTS as the base image
-FROM ubuntu:22.04
-
-RUN apt-get update && apt-get install -y gnupg
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C
+FROM ubuntu:latest
 
 # Install required dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt update && apt install -y \
     wget \
     unzip \
     software-properties-common \
@@ -19,10 +16,10 @@ RUN apt-get update && apt-get install -y \
 RUN wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
     && add-apt-repository universe \
-    && apt-get update \
-    && apt-get install -y apt-transport-https \
-    && apt-get update \
-    && apt-get install -y dotnet-sdk-7.0
+    && apt update \
+    && apt install -y apt-transport-https \
+    && apt update \
+    && apt install -y dotnet-sdk-7.0
 
 # Download and unzip files
 RUN wget https://vps2.flaxengine.com/store/builds/Package_1_06_06344/FlaxEditorLinux.zip
