@@ -2,8 +2,8 @@
 FROM ubuntu:22.04
 
 # Import repository keys
-RUN apt-get update && apt-get install -y gnupg2
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C
+RUN apt-get update && apt-get install -y gnupg2
 
 # Install required dependencies
 RUN apt-get update && apt-get install -y \
