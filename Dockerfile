@@ -1,5 +1,5 @@
 # Use Ubuntu LTS as the base image
-FROM ubuntu:latest
+FROM mcr.microsoft.com/dotnet/sdk:7.0-bookworm-slim
 
 # Install required dependencies
 RUN apt update && apt install -y \
@@ -12,20 +12,17 @@ RUN apt update && apt install -y \
     curl \
     libcurl4-gnutls-dev
 
-# Install .NET SDK 7.0
-RUN wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
-    && dpkg -i packages-microsoft-prod.deb \
-    && add-apt-repository universe \
-    && apt update \
-    && apt install -y apt-transport-https \
-    && apt update \
-    && apt install -y dotnet-sdk-7.0
-
 # Download and unzip files
-RUN wget https://vps2.flaxengine.com/store/builds/Package_1_06_06344/FlaxEditorLinux.zip
-RUN unzip -o FlaxEditorLinux.zip -d /app && rm FlaxEditorLinux.zip
 
-RUN wget https://vps2.flaxengine.com/store/builds/Package_1_06_06344/Linux.zip
-RUN unzip -o Linux.zip -d /app && rm Linux.zip
+## Engine (the Linux version)
+ARG ENGINE_URL
+RUN wget $OS_PLATAFORM_URL -O engine.zip
+RUN unzip -o engine.zip -d /app && rm engine.zip
+
+## Platform Tools
+ARG OS_PLATAFORM_URL
+RUN wget $OS_PLATAFORM_URL -O package.zip
+RUN unzip -o Lipackagenux.zip -d /app && rm package.zip
 
 RUN find ./ -type f -executable -exec chmod +x {} \;
+ENTRYPOINT [ "/app/Binaries/Editor/Linux/Release/FlaxEditor" ]

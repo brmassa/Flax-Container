@@ -3,14 +3,17 @@ image: docker:20.10.24
 services:
   - docker:20.10.24-dind
 
-variables:
-  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-
 before_script:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 build:
   stage: build
   script:
-    - docker build -t $IMAGE_TAG .
-    - docker push $IMAGE_TAG
+    - export ENGINE_URL=$(eval echo \$FLAX_${FLAX_VERSION}_URL)
+    - export OS_PLATAFORM_URL=$(eval echo \$FLAX_${FLAX_VERSION}_${OS}_URL)
+    - export IMAGE_TAG=$(eval echo flax-engine:${FLAX_VERSION}_${OS})
+    - docker build -t $CI_REGISTRY_IMAGE:$IMAGE_TAG --build-arg OS=$OS ENGINE_URL=$ENGINE_URL OS_PLATAFORM_URL=$OS_PLATAFORM_URL .
+    - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
+  parallel:
+    matrix:
+      - OS: [Linux]
