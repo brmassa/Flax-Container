@@ -4,17 +4,24 @@ services:
   - docker:20.10.24-dind
 
 before_script:
-  - source .env
+  # - source .env
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 build:
   stage: build
   script:
-    - export ENGINE_URL=$(eval echo \$FLAX_${FLAX_VERSION}_URL)
-    - export OS_PLATFORM_URL=$(eval echo \$FLAX_${FLAX_VERSION}_${OS}_URL)
-    - export IMAGE_TAG=$(eval echo ${FLAX_VERSION//_/.}-${OS} | tr '[:upper:]' '[:lower:]')
+    - python3 download.py
+    # - export ENGINE_URL=$(eval echo \$FLAX_${FLAX_VERSION}_URL)
+    # - export OS_PLATFORM_URL=$(eval echo \$FLAX_${FLAX_VERSION}_${OS_PLATFORM}_URL)
+    - export IMAGE_TAG=$(eval echo ${FLAX_VERSION//_/.}-${OS_PLATFORM})
     - docker build -t $CI_REGISTRY_IMAGE:$IMAGE_TAG --build-arg OS=$OS --build-arg ENGINE_URL=$ENGINE_URL --build-arg OS_PLATFORM_URL=$OS_PLATFORM_URL .
     - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
   parallel:
     matrix:
-      - OS: [LINUX_AMD64]
+      - OS_PLATFORM: [
+          linux_amd64,
+          windows_amd64,
+          android_arm64,
+          xboxone,
+          windows_store,
+        ]
