@@ -32,8 +32,8 @@ def main():
     platform_env = os.getenv("OS_PLATFORM") or "windows_adm64"  # Default platform
     platform = PLATFORM_MAP.get(platform_env)
 
-    print(f"Using FLAX_VERSION: {flax_version}")
-    print(f"Using OS_PLATFORM: {platform}")
+    print(f"Using FLAX_VERSION:\t\t{flax_version}")
+    print(f"Using OS_PLATFORM:\t\t{platform}")
     if not platform:
         print("Invalid platform environment variable.")
         return
@@ -47,20 +47,18 @@ def main():
 
         if editor_url and os_platform_url:
             # Download Editor and platform package
-            print(f"Downloading Editor: {editor_url}")
+            print(f"Downloading Editor:\t\t{editor_url}")
             download_file(editor_url, "Editor.zip")
-            print(f"Downloading OS Platform tool: : {os_platform_url}")
-            download_file(os_platform_url, f"{platform}.zip")
+            print(f"Downloading OS Platform tool:\t{os_platform_url}")
+            download_file(os_platform_url, f"{platform_env}.zip")
 
             # Unzip files
             print("Extracting Editor.")
             unzip_file("Editor.zip", "./app")
-            print("Extracting OS Platform tool.")
-            unzip_file(f"{platform}.zip", "./app")
 
-            # Delete zip files
-            delete_file("Editor.zip")
-            delete_file(f"{platform}.zip")
+            print("Extracting OS Platform tool.")
+            unzip_file(f"{platform_env}.zip", "./app")
+
             print("Download and extraction completed.")
         else:
             print("Editor or platform package not found for the specified version and platform.")
