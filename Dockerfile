@@ -16,7 +16,7 @@ RUN apt update && apt install -y \
 
 ## Engine (the Linux version)
 ARG ENGINE_URL
-RUN wget $OS_PLATAFORM_URL -O engine.zip
+RUN wget $ENGINE_URL -O engine.zip
 RUN unzip -o engine.zip -d /app && rm engine.zip
 
 ## Platform Tools
