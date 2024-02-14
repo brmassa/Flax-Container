@@ -17,4 +17,4 @@ build:
     - docker push $CI_REGISTRY_IMAGE/$IMAGE_TAG
   parallel:
     matrix:
-      - OS: [Linux]
+      - OS: [LINUX]
