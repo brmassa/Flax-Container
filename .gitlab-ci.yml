@@ -4,6 +4,7 @@ services:
   - docker:20.10.24-dind
 
 before_script:
+  - eval $(dotenv -f .env)
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 build:
