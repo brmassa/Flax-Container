@@ -14,7 +14,7 @@ build:
     - export OS_PLATFORM_URL=$(eval echo \$FLAX_${FLAX_VERSION}_${OS}_URL)
     - export IMAGE_TAG=$(eval echo flax-engine:${FLAX_VERSION//_/.}-${OS} | tr '[:upper:]' '[:lower:]')
     - docker build -t $IMAGE_TAG --build-arg OS=$OS --build-arg ENGINE_URL=$ENGINE_URL --build-arg OS_PLATFORM_URL=$OS_PLATFORM_URL .
-    - docker push $IMAGE_TAG
+    - docker push $CI_REGISTRY_IMAGE/$IMAGE_TAG
   parallel:
     matrix:
       - OS: [LINUXx64]
