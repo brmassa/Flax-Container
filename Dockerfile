@@ -20,9 +20,9 @@ RUN wget $ENGINE_URL -O engine.zip
 RUN unzip -o engine.zip -d /app && rm engine.zip
 
 ## Platform Tools
-ARG OS_PLATAFORM_URL
-RUN wget $OS_PLATAFORM_URL -O package.zip
-RUN unzip -o Lipackagenux.zip -d /app && rm package.zip
+ARG OS_PLATFORM_URL
+RUN wget $OS_PLATFORM_URL -O platform.zip
+RUN unzip -o platform.zip -d /app && rm platform.zip
 
 RUN find ./ -type f -executable -exec chmod +x {} \;
 ENTRYPOINT [ "/app/Binaries/Editor/Linux/Release/FlaxEditor" ]
