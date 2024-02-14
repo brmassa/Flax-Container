@@ -12,17 +12,11 @@ RUN apt update && apt install -y \
     curl \
     libcurl4-gnutls-dev
 
-# Download and unzip files
+# Include downloaded editor and os platform
+COPY ./app /app
 
-## Engine (the Linux version)
-# ARG ENGINE_URL
-# RUN wget $ENGINE_URL -O engine.zip
-# RUN unzip -o engine.zip -d /app && rm engine.zip
-
-# ## Platform Tools
-# ARG OS_PLATFORM_URL
-# RUN wget $OS_PLATFORM_URL -O platform.zip
-# RUN unzip -o platform.zip -d /app && rm platform.zip
-
+# make sure all executables have their won permissions
 RUN find ./ -type f -executable -exec chmod +x {} \;
+
+# automatically run the Editor when using this image
 ENTRYPOINT [ "/app/Binaries/Editor/Linux/Release/FlaxEditor" ]

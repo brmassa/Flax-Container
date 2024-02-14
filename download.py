@@ -54,9 +54,9 @@ def main():
 
             # Unzip files
             print("Extracting Editor.")
-            unzip_file("Editor.zip", ".")
+            unzip_file("Editor.zip", "./app")
             print("Extracting OS Platform tool.")
-            unzip_file(f"{platform}.zip", platform)
+            unzip_file(f"{platform}.zip", "./app")
 
             # Delete zip files
             delete_file("Editor.zip")
