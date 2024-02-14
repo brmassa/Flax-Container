@@ -13,7 +13,7 @@ RUN apt update && apt install -y \
     libcurl4-gnutls-dev
 
 # Include downloaded editor and os platform
-COPY ./app/* /app
+COPY ./app/ /app
 
 # make sure all executables have their won permissions
 RUN find ./ -type f -executable -exec chmod +x {} \;
