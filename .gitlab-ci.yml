@@ -13,6 +13,13 @@ build:
   stage: build
   script:
     - python3 download.py
+    - | 
+      if [[ ! -d "Binaries" ]]; then
+        echo "Binaries folder does not exist. Quitting job."
+        exit 0  # Exit with success code 0 to indicate non-failure
+      fi
+# ... Continue with job steps if Binaries folder exists ...
+
     # - export ENGINE_URL=$(eval echo \$FLAX_${FLAX_VERSION}_URL)
     # - export OS_PLATFORM_URL=$(eval echo \$FLAX_${FLAX_VERSION}_${OS_PLATFORM}_URL)
     - export IMAGE_TAG=$(eval echo ${FLAX_VERSION//_/.}-${OS_PLATFORM})

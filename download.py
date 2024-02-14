@@ -33,7 +33,7 @@ def main():
     platform = PLATFORM_MAP.get(platform_env)
 
     print(f"Using FLAX_VERSION: {flax_version}")
-    print(f"Using PLATFORM: {platform}")
+    print(f"Using OS_PLATFORM: {platform}")
     if not platform:
         print("Invalid platform environment variable.")
         return
@@ -43,19 +43,19 @@ def main():
     if version_data:
         # Find the package URLs based on platform
         editor_url = next((p["url"] for p in version_data["packages"] if p["name"] == "Editor"), None)
-        platform_package = next((p["url"] for p in version_data["packages"] if p["name"] == platform), None)
+        os_platform_url = next((p["url"] for p in version_data["packages"] if p["name"] == platform), None)
 
-        if editor_url and platform_package:
+        if editor_url and os_platform_url:
             # Download Editor and platform package
             print(f"Downloading Editor: {editor_url}")
             download_file(editor_url, "Editor.zip")
-            print(f"Downloading Platform tool: : {platform_package}")
-            download_file(platform_package["url"], f"{platform}.zip")
+            print(f"Downloading OS Platform tool: : {os_platform_url}")
+            download_file(os_platform_url, f"{platform}.zip")
 
             # Unzip files
             print("Extracting Editor.")
             unzip_file("Editor.zip", ".")
-            print("Extracting Platform tool.")
+            print("Extracting OS Platform tool.")
             unzip_file(f"{platform}.zip", platform)
 
             # Delete zip files
