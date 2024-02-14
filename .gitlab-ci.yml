@@ -4,7 +4,8 @@ services:
   - docker:20.10.24-dind
 
 before_script:
-  - eval $(dotenv -f .env)
+  - source .env
+  - echo $FLAX_VERSION
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 build:
