@@ -14,8 +14,8 @@ build:
   script:
     - python3 download.py
     - | 
-      if [[ ! -d "Binaries" ]]; then
-        echo "Binaries folder does not exist. Quitting job."
+      if [[ ! -d "app" ]]; then
+        echo "app folder does not exist. Quitting job."
         exit 2  # Exit with success code 2 to indicate non-failure
       fi
     - export IMAGE_TAG=$(eval echo ${FLAX_VERSION//_/.}-${OS_PLATFORM})
