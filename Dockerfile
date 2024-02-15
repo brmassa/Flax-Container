@@ -13,7 +13,7 @@ RUN apt update && apt install -y \
     libcurl4-gnutls-dev
 
 # Include downloaded editor and os platform
-COPY ./flax/ /flax
+COPY ./app/ /flax
 
 # make sure all executables have permissions to be executed
 RUN find /flax/ -type f -executable -exec chmod +x {} \;
