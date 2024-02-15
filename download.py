@@ -28,7 +28,7 @@ def unzip_file(zip_file, extract_path):
 def delete_file(filename):
     os.remove(filename)
 
-def set_permission_executables(path)
+def set_permission_executables(path):
     for root, _, files in os.walk(path):
         for filename in files:
             filepath = os.path.join(root, filename)
