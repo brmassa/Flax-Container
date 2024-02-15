@@ -13,6 +13,7 @@ build:
       exit_codes: 2
   script:
     - python3 download.py
+    - ls -l /app/Binaries/Editor/Linux/Release/
     - | 
       if [[ ! -d "app" ]]; then
         echo "app folder does not exist. Quitting job."
