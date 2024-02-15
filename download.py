@@ -28,6 +28,14 @@ def unzip_file(zip_file, extract_path):
 def delete_file(filename):
     os.remove(filename)
 
+def set_permission_executables(path)
+    for root, _, files in os.walk(path):
+        for filename in files:
+            filepath = os.path.join(root, filename)
+            if os.path.isfile(filepath) and os.access(filepath, os.X_OK):
+                os.chmod(filepath, os.stat(filepath).st_mode | 0o111)
+                print(f"Make it executable: {filepath}")
+
 def main():
     # Download JSON
     json_url = "https://api.flaxengine.com/launcher/engine"
@@ -67,6 +75,8 @@ def main():
             print("Extracting OS Platform tool.")
             platform_mini = platform_env.split('_')[0].capitalize()
             unzip_file(f"{platform_env}.zip", f"./app/Source/Platforms/{platform_mini}/")
+
+            set_permission_executables("./app")
 
             print("Download and extraction completed.")
         else:

@@ -16,4 +16,4 @@ RUN apt update && apt install -y \
 COPY ./app/ /flax
 
 # make sure all executables have permissions to be executed
-RUN find /flax/ -type f -executable -exec chmod +x {} \;
+# RUN find /flax/ -type f -executable -exec chmod +x {} \;
