@@ -66,7 +66,7 @@ def main():
 
             print("Extracting OS Platform tool.")
             platform_mini = platform_env.split('_')[0].capitalize()
-            unzip_file(f"{platform_env}.zip", f"./app/Source/Platform/{platform_mini}/")
+            unzip_file(f"{platform_env}.zip", f"./app/Source/Platforms/{platform_mini}/")
 
             print("Download and extraction completed.")
         else:
