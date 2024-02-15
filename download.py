@@ -32,7 +32,7 @@ def set_permission_executables(path):
     for root, _, files in os.walk(path):
         for filename in files:
             filepath = os.path.join(root, filename)
-            if os.path.isfile(filepath) and os.access(filepath, os.X_OK):
+            if os.path.isfile(filepath) and not os.access(filepath, os.X_OK):
                 os.chmod(filepath, os.stat(filepath).st_mode | 0o111)
                 print(f"Make it executable: {filepath}")
 
