@@ -14,6 +14,13 @@ PLATFORM_MAP = {
 def download_file(url, filename):
     urllib.request.urlretrieve(url, filename)
 
+
+def replace_editor_zip(url):
+  parsed_url = urllib.parse.urlparse(url)
+  new_path = parsed_url.path.replace("/Editor.zip", "/FlaxEditorLinux.zip")
+  return urllib.parse.urlunparse((parsed_url.scheme, parsed_url.netloc, new_path, parsed_url.params, parsed_url.query, parsed_url.fragment))
+
+
 def unzip_file(zip_file, extract_path):
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         zip_ref.extractall(extract_path)
@@ -43,6 +50,7 @@ def main():
     if version_data:
         # Find the package URLs based on platform
         editor_url = next((p["url"] for p in version_data["packages"] if p["name"] == "Editor"), None)
+        editor_url = replace_editor_zip(editor_url)
         os_platform_url = next((p["url"] for p in version_data["packages"] if p["name"] == platform), None)
 
         if editor_url and os_platform_url:
