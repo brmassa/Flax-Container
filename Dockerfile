@@ -13,10 +13,7 @@ RUN apt update && apt install -y \
     libcurl4-gnutls-dev
 
 # Include downloaded editor and os platform
-COPY ./app/ /app
+COPY ./flax/ /flax
 
-# make sure all executables have their won permissions
-RUN find ./ -type f -executable -exec chmod +x {} \;
-
-# automatically run the Editor when using this image
-ENTRYPOINT [ "/app/Binaries/Editor/Linux/Release/FlaxEditor" ]
+# make sure all executables have permissions to be executed
+RUN find /flax/ -type f -executable -exec chmod +x {} \;

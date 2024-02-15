@@ -56,16 +56,16 @@ def main():
         if editor_url and os_platform_url:
             # Download Editor and platform package
             print(f"Downloading Editor:\t\t{editor_url}")
-            download_file(editor_url, "Editor.zip")
+            # download_file(editor_url, "Editor.zip")
             print(f"Downloading OS Platform tool:\t{os_platform_url}")
-            download_file(os_platform_url, f"{platform_env}.zip")
+            # download_file(os_platform_url, f"{platform_env}.zip")
 
             # Unzip files
             print("Extracting Editor.")
-            unzip_file("Editor.zip", "./app")
+            unzip_file("Editor.zip", "./flax")
 
             print("Extracting OS Platform tool.")
-            unzip_file(f"{platform_env}.zip", "./app")
+            unzip_file(f"{platform_env}.zip", "./flax")
 
             print("Download and extraction completed.")
         else:
