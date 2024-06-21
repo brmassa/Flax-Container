@@ -34,6 +34,7 @@ jobs:
         run: python download.py
         env:
           FLAX_VERSION: ${{ vars.FLAX_VERSION }}
+          OS_PLATFORM: ${{ matrix.OS_PLATFORM }}
 
       - name: Check for app folder
         run: |
@@ -60,6 +61,11 @@ jobs:
           tags: |
             type=raw,value=${{ matrix.OS_PLATFORM }}-${{ vars.FLAX_VERSION }}
             type=raw,value=${{ matrix.OS_PLATFORM }}-latest
+
+      - name: Debug Metadata
+        run: |
+          echo "Tags: ${{ steps.meta.outputs.tags }}"
+          echo "Labels: ${{ steps.meta.outputs.labels }}"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
