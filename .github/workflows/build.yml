@@ -72,4 +72,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          push-by-digest: true
+          push-by-digest: false
