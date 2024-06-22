@@ -22,10 +22,12 @@ build:
         echo "app folder does not exist. Job failed."
         exit 2  # Exit with success code 2 to indicate non-failure
       fi
+    - echo ${FLAX_VERSION_FULL}
     - echo ${FLAX_VERSION_FULL//_/.}
     - export IMAGE_TAG_VERSION_FULL=${OS_PLATFORM}-$(eval echo ${FLAX_VERSION_FULL//_/.})
     - export IMAGE_TAG_VERSION=${OS_PLATFORM}-$(eval echo ${FLAX_VERSION//_/.})
     - export IMAGE_TAG_LATEST=${OS_PLATFORM}-latest
+    - echo ${IMAGE_TAG_VERSION_FULL}
     - |
       docker build \
       -t $CI_REGISTRY_IMAGE:$IMAGE_TAG_VERSION_FULL \
