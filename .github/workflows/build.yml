@@ -33,17 +33,10 @@ jobs:
       - name: Run download the Engine and Platform
         run: |
           python download.py
-          source .env
+          source _env
         env:
           FLAX_VERSION: ${{ vars.FLAX_VERSION }}
           OS_PLATFORM: ${{ matrix.OS_PLATFORM }}
-
-      - name: Check for app folder
-        run: |
-          if [[ ! -d "app" ]]; then
-            echo "app folder does not exist. Job failed."
-            exit 1
-          fi
 
       - name: Check for app folder 1
         run: echo $FLAX_VERSION_FULL
@@ -55,6 +48,13 @@ jobs:
         run: echo "${FLAX_VERSION_FULL}"
       - name: Check for app folder 6
         run: echo ${{ env.FLAX_VERSION_FULL }}
+
+      - name: Check for app folder
+        run: |
+          if [[ ! -d "app" ]]; then
+            echo "app folder does not exist. Job failed."
+            exit 1
+          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
