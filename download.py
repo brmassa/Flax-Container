@@ -49,8 +49,8 @@ def main():
         data = json.loads(response.read())
 
     # Get FLAX_VERSION and PLATFORM from environment or arguments
-    flax_version = os.getenv("FLAX_VERSION") or "1.7"  # Default version
-    platform_env = os.getenv("OS_PLATFORM") or "windows_amd64"  # Default platform
+    flax_version = os.getenv("FLAX_VERSION") or "1.8"               # Default version
+    platform_env = os.getenv("OS_PLATFORM")  or "windows_amd64"     # Default platform
     platform = PLATFORM_MAP.get(platform_env)
 
     print(f"Using FLAX_VERSION:\t\t{flax_version}")

@@ -46,14 +46,15 @@ jobs:
           fi
 
       - name: Check for app folder 1
-        run:  $FLAX_VERSION_FULL
+        run: echo $FLAX_VERSION_FULL
       - name: Check for app folder 2
         run: echo ${FLAX_VERSION_FULL}
       - name: Check for app folder 4
         run: echo "$FLAX_VERSION_FULL"
       - name: Check for app folder 5
         run: echo "${FLAX_VERSION_FULL}"
-          
+      - name: Check for app folder 6
+        run: echo ${{ env.FLAX_VERSION_FULL }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -71,7 +72,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ matrix.OS_PLATFORM }}-$FLAX_VERSION_FULL
+            type=raw,value=${{ matrix.OS_PLATFORM }}-${{ env.FLAX_VERSION_FULL }}
             type=raw,value=${{ matrix.OS_PLATFORM }}-${{ vars.FLAX_VERSION }}
             type=raw,value=${{ matrix.OS_PLATFORM }}-latest
 
