@@ -43,8 +43,9 @@ def set_environment_variables(version_data):
     with open('_env', 'w') as writer:
         writer.write(f'export FLAX_VERSION_FULL={flax_version_full}')
     github_env_file = os.getenv('GITHUB_ENV')
-    with open(github_env_file, 'a') as writer:
-        writer.write(f'FLAX_VERSION_FULL={flax_version_full}')
+    if github_env_file and os.access(github_env_file, os.W_OK):
+        with open(github_env_file, 'a') as writer:
+            writer.write(f'FLAX_VERSION_FULL={flax_version_full}')
 
 def main():
     # Download JSON
