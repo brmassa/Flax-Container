@@ -40,7 +40,7 @@ def set_environment_variables(version_data):
     flax_version_full = version_data["version"]
     # os.environ['FLAX_VERSION_FULL'] = flax_version_full
     with open('.env', 'w') as writer:
-        writer.write(f'EXPORT FLAX_VERSION_FULL={flax_version_full}')
+        writer.write(f'export FLAX_VERSION_FULL={flax_version_full}')
 
 def main():
     # Download JSON
