@@ -44,10 +44,8 @@ jobs:
           fi
           echo $FLAX_VERSION_FULL
           echo ${FLAX_VERSION_FULL}
-          echo ${{FLAX_VERSION_FULL}}
           echo "$FLAX_VERSION_FULL"
           echo "${FLAX_VERSION_FULL}"
-          echo "${{FLAX_VERSION_FULL}}"
           echo ${{ env.FLAX_VERSION_FULL }}
 
       - name: Set up Docker Buildx
