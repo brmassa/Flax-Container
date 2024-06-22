@@ -12,28 +12,22 @@ build:
       exit_codes: 2
   script:
     - python3 download.py
+    - source _env
     - | 
       if [[ ! -d "app" ]]; then
         echo "app folder does not exist. Job failed."
         exit 2  # Exit with success code 2 to indicate non-failure
       fi
-    - source _env
-    - export IMAGE_TAG_VERSION_FULL=${OS_PLATFORM}-$FLAX_VERSION_FULL
-    - export IMAGE_TAG_VERSION=${OS_PLATFORM}-$(eval echo ${FLAX_VERSION//_/.})
-    - export IMAGE_TAG_LATEST=${OS_PLATFORM}-latest
     - |
       docker build \
-      -t $CI_REGISTRY_IMAGE:$IMAGE_TAG_VERSION_FULL \
-      -t $CI_REGISTRY_IMAGE:$IMAGE_TAG_VERSION \
-      -t $CI_REGISTRY_IMAGE:$IMAGE_TAG_LATEST \
+      -t $CI_REGISTRY_IMAGE:${OS_PLATFORM}-$FLAX_VERSION_FULL \
+      -t $CI_REGISTRY_IMAGE:${OS_PLATFORM}-$(eval echo ${FLAX_VERSION//_/.}) \
+      -t $CI_REGISTRY_IMAGE:${OS_PLATFORM}-latest \
       --build-arg OS=$OS \
       --build-arg ENGINE_URL=$ENGINE_URL \
       --build-arg OS_PLATFORM_URL=$OS_PLATFORM_URL .
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - |
-      docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG_VERSION_FULL \
-                  $CI_REGISTRY_IMAGE:$IMAGE_TAG_VERSION \
-                  $CI_REGISTRY_IMAGE:$IMAGE_TAG_LATEST
+    - docker push $CI_REGISTRY_IMAGE --all-tags
   parallel:
     matrix:
       - OS_PLATFORM: [

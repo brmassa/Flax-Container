@@ -55,23 +55,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Extract metadata (tags, labels) for Docker
-      #   id: meta
-      #   uses: docker/metadata-action@v4
-      #   with:
-      #     images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-      #     tags: |
-      #       type=raw,value=${{ matrix.OS_PLATFORM }}-${{ env.FLAX_VERSION_FULL }}
-      #       type=raw,value=${{ matrix.OS_PLATFORM }}-${{ vars.FLAX_VERSION }}
-      #       type=raw,value=${{ matrix.OS_PLATFORM }}-latest
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ matrix.OS_PLATFORM }}-${{ env.FLAX_VERSION_FULL }}
+            type=raw,value=${{ matrix.OS_PLATFORM }}-${{ vars.FLAX_VERSION }}
+            type=raw,value=${{ matrix.OS_PLATFORM }}-latest
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: |
-            ${{ matrix.OS_PLATFORM }}-${{ env.FLAX_VERSION_FULL }}
-            ${{ matrix.OS_PLATFORM }}-${{ vars.FLAX_VERSION }}
-            ${{ matrix.OS_PLATFORM }}-latest
-          # tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          push-by-digest: true
