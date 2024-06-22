@@ -54,7 +54,7 @@ def main():
         return
 
     # Find the version data
-    version_data = next((v for v in data["name"] if v["name"] == flax_version), None)
+    version_data = next((v for v in data["versions"] if v["name"] == flax_version), None)
     if version_data:
         flax_version_full = version_data["version"]
         os.environ['FLAX_VERSION_FULL'] = flax_version_full
