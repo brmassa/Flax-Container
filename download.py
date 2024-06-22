@@ -72,26 +72,26 @@ def main():
         editor_url = replace_editor_zip(editor_url)
         os_platform_url = next((p["url"] for p in version_data["packages"] if p["name"] == platform), None)
 
-        # if editor_url and os_platform_url:
-        #     # Download Editor and platform package
-        #     print(f"Downloading Editor:\t\t{editor_url}")
-        #     download_file(editor_url, "Editor.zip")
-        #     print(f"Downloading OS Platform tool:\t{os_platform_url}")
-        #     download_file(os_platform_url, f"{platform_env}.zip")
+        if editor_url and os_platform_url:
+            # Download Editor and platform package
+            print(f"Downloading Editor:\t\t{editor_url}")
+            download_file(editor_url, "Editor.zip")
+            print(f"Downloading OS Platform tool:\t{os_platform_url}")
+            download_file(os_platform_url, f"{platform_env}.zip")
 
-        #     # Unzip files
-        #     print("Extracting Editor.")
-        #     unzip_file("Editor.zip", "./app")
+            # Unzip files
+            print("Extracting Editor.")
+            unzip_file("Editor.zip", "./app")
 
-        #     print("Extracting OS Platform tool.")
-        #     platform_mini = platform_env.split('_')[0].capitalize()
-        #     unzip_file(f"{platform_env}.zip", f"./app/Source/Platforms/{platform_mini}/")
+            print("Extracting OS Platform tool.")
+            platform_mini = platform_env.split('_')[0].capitalize()
+            unzip_file(f"{platform_env}.zip", f"./app/Source/Platforms/{platform_mini}/")
 
-        #     set_permission_executables("./app")
+            set_permission_executables("./app")
 
-        #     print("Download and extraction completed.")
-        # else:
-        #     print("Editor or platform package not found for the specified version and platform.")
+            print("Download and extraction completed.")
+        else:
+            print("Editor or platform package not found for the specified version and platform.")
     else:
         print("Version not found in the JSON data.")
 
