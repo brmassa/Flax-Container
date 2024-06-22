@@ -42,11 +42,18 @@ jobs:
             echo "app folder does not exist. Job failed."
             exit 1
           fi
-          echo $FLAX_VERSION_FULL
-          echo ${FLAX_VERSION_FULL}
-          echo "$FLAX_VERSION_FULL"
-          echo "${FLAX_VERSION_FULL}"
-          echo ${{ env.FLAX_VERSION_FULL }}
+
+      - name: Check for app folder 1
+        run:  $FLAX_VERSION_FULL
+      - name: Check for app folder 2
+        run: echo ${FLAX_VERSION_FULL} 
+      - name: Check for app folder 3
+        run: echo ${{FLAX_VERSION_FULL}}
+      - name: Check for app folder 4
+        run: echo "$FLAX_VERSION_FULL"
+      - name: Check for app folder 5
+        run: echo "${FLAX_VERSION_FULL}"
+          
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
