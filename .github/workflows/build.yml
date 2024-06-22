@@ -42,7 +42,8 @@ jobs:
             echo "app folder does not exist. Job failed."
             exit 1
           fi
-          echo $FLAX_VERSION_FULL
+          echo ${FLAX_VERSION_FULL//_/.}
+          echo ${FLAX_VERSION_FULL}
           echo ${{ env.FLAX_VERSION_FULL }}
 
       - name: Set up Docker Buildx
@@ -61,7 +62,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ matrix.OS_PLATFORM }}-$FLAX_VERSION_FULL
+            type=raw,value=${{ matrix.OS_PLATFORM }}-${FLAX_VERSION_FULL}
             type=raw,value=${{ matrix.OS_PLATFORM }}-${{ vars.FLAX_VERSION }}
             type=raw,value=${{ matrix.OS_PLATFORM }}-latest
 
