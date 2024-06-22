@@ -20,10 +20,10 @@ jobs:
       matrix:
         OS_PLATFORM: [
             linux_amd64,
-            windows_amd64,
-            android_arm64,
-            xboxone,
-            windows_store,
+            # windows_amd64,
+            # android_arm64,
+            # xboxone,
+            # windows_store,
           ]
 
     steps:
@@ -59,13 +59,9 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
+            type=raw,value=${{ matrix.OS_PLATFORM }}-${{ env.FLAX_VERSION_FULL }}
             type=raw,value=${{ matrix.OS_PLATFORM }}-${{ vars.FLAX_VERSION }}
             type=raw,value=${{ matrix.OS_PLATFORM }}-latest
-
-      - name: Debug Metadata
-        run: |
-          echo "Tags: ${{ steps.meta.outputs.tags }}"
-          echo "Labels: ${{ steps.meta.outputs.labels }}"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
@@ -73,7 +69,3 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            OS=${{ matrix.OS_PLATFORM }}
-            FLAX_VERSION=${{ vars.FLAX_VERSION }}

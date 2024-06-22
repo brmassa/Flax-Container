@@ -54,7 +54,7 @@ def main():
         return
 
     # Find the version data
-    version_data = next((v for v in data["versions"] if v["version"] == flax_version), None)
+    version_data = next((v for v in data["name"] if v["name"] == flax_version), None)
     if version_data:
         # Find the package URLs based on platform
         editor_url = next((p["url"] for p in version_data["packages"] if p["name"] == "Editor"), None)

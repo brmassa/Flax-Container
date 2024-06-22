@@ -1,5 +1,4 @@
-# Use Ubuntu LTS as the base image
-FROM mcr.microsoft.com/dotnet/sdk:7.0-bookworm-slim
+FROM mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim
 
 # Install required dependencies
 RUN apt update && apt install -y \
@@ -14,6 +13,3 @@ RUN apt update && apt install -y \
 
 # Include downloaded editor and os platform
 COPY ./app/ /flax
-
-# make sure all executables have permissions to be executed
-# RUN find /flax/ -type f -executable -exec chmod +x {} \;

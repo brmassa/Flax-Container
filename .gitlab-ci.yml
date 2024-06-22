@@ -1,11 +1,15 @@
-image: docker:20.10.24
+image: docker:latest
 
 services:
-  - docker:20.10.24-dind
+  - docker:dind
 
 before_script:
   - apk add python3
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+setup_docker:
+  stage: setup
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 build:
   stage: build
@@ -18,17 +22,25 @@ build:
         echo "app folder does not exist. Job failed."
         exit 2  # Exit with success code 2 to indicate non-failure
       fi
-    - export IMAGE_TAG=${OS_PLATFORM}-$(eval echo ${FLAX_VERSION//_/.})
+    - export IMAGE_TAG_VERSION_FULL=${OS_PLATFORM}-$(eval echo ${FLAX_VERSION_FULL//_/.})
+    - export IMAGE_TAG_VERSION=${OS_PLATFORM}-$(eval echo ${FLAX_VERSION//_/.})
     - export IMAGE_TAG_LATEST=${OS_PLATFORM}-latest
-    - docker build -t $CI_REGISTRY_IMAGE:$IMAGE_TAG -t $CI_REGISTRY_IMAGE:$IMAGE_TAG_LATEST --build-arg OS=$OS --build-arg ENGINE_URL=$ENGINE_URL --build-arg OS_PLATFORM_URL=$OS_PLATFORM_URL .
-    - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
+    - docker build \
+      -t $CI_REGISTRY_IMAGE:$IMAGE_TAG_VERSION_FULL \
+      -t $CI_REGISTRY_IMAGE:$IMAGE_TAG_VERSION \
+      -t $CI_REGISTRY_IMAGE:$IMAGE_TAG_LATEST \
+      --build-arg OS=$OS \
+      --build-arg ENGINE_URL=$ENGINE_URL \
+      --build-arg OS_PLATFORM_URL=$OS_PLATFORM_URL .
+    - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG_VERSION_FULL
+    - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG_VERSION
     - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG_LATEST
   parallel:
     matrix:
       - OS_PLATFORM: [
           linux_amd64,
-          windows_amd64,
-          android_arm64,
-          xboxone,
-          windows_store,
+          # windows_amd64,
+          # android_arm64,
+          # xboxone,
+          # windows_store,
         ]
