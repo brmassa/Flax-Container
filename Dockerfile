@@ -5,7 +5,6 @@ RUN apt update && apt install -y \
     build-essential \
     curl \
     libcurl4-gnutls-dev \
-    libgcc \
     libx11-6 \
     libxcursor1 \
     libxinerama1 \
