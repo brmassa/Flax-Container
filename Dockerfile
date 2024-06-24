@@ -1,15 +1,17 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim
+FROM mcr.microsoft.com/dotnet/sdk:8.0
 
 # Install required dependencies
 RUN apt update && apt install -y \
-    wget \
-    unzip \
-    software-properties-common \
+    build-essential \
+    curl \
+    libcurl4-gnutls-dev \
+    libgcc \
     libx11-6 \
     libxcursor1 \
     libxinerama1 \
-    curl \
-    libcurl4-gnutls-dev
+    software-properties-common \
+    unzip \
+    wget
 
 # Include downloaded editor and os platform
 COPY ./app/ /flax
