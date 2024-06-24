@@ -4,20 +4,38 @@ import urllib.request
 import zipfile
 
 PLATFORM_MAP = {
-    "linux_amd64": "Linux (target platform)",
-    "windows_amd64": "Windows (target platform)",
-    "android_arm64": "Android (target platform)",
-    "xboxone": "Xbox One (target platform)",
-    "windows_store": "Windows Store (target platform)"
+    "linux_amd64": {
+        "name": "Linux (target platform)",
+        "editor_zip": "/FlaxEditorLinux.zip"
+    },
+    "windows_amd64": {
+        "name": "Windows (target platform)",
+        "editor_zip": None                      # The default Editor.zip is Windows
+    },
+    "android_arm64": {
+        "name": "Android (target platform)",
+        "editor_zip": "/FlaxEditorLinux.zip"
+    },
+    "xboxone": {
+        "name": "Xbox One (target platform)",
+        "editor_zip": None
+    },
+    "windows_store": {
+        "name": "Windows Store (target platform)",
+        "editor_zip": None
+    }
 }
+
 
 def download_file(url, filename):
     urllib.request.urlretrieve(url, filename)
 
 
-def replace_editor_zip(url):
+def replace_editor_zip(url, platform):
+  if platform['editor_zip'] is None:
+    return url
   parsed_url = urllib.parse.urlparse(url)
-  new_path = parsed_url.path.replace("/Editor.zip", "/FlaxEditorLinux.zip")
+  new_path = parsed_url.path.replace("/Editor.zip", platform['editor_zip'])
   return urllib.parse.urlunparse((parsed_url.scheme, parsed_url.netloc, new_path, parsed_url.params, parsed_url.query, parsed_url.fragment))
 
 
@@ -59,7 +77,7 @@ def main():
     platform = PLATFORM_MAP.get(platform_env)
 
     print(f"Using FLAX_VERSION:\t\t{flax_version}")
-    print(f"Using OS_PLATFORM:\t\t{platform}")
+    print(f"Using OS_PLATFORM:\t\t{platform['name']}")
     if not platform:
         print("Invalid platform environment variable.")
         return
@@ -70,8 +88,8 @@ def main():
         set_environment_variables(version_data)
         # Find the package URLs based on platform
         editor_url = next((p["url"] for p in version_data["packages"] if p["name"] == "Editor"), None)
-        editor_url = replace_editor_zip(editor_url)
-        os_platform_url = next((p["url"] for p in version_data["packages"] if p["name"] == platform), None)
+        editor_url = replace_editor_zip(editor_url, platform)
+        os_platform_url = next((p["url"] for p in version_data["packages"] if p["name"] == platform['name']), None)
 
         if editor_url and os_platform_url:
             # Download Editor and platform package

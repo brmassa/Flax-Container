@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0-jammy
+FROM mcr.microsoft.com/dotnet/sdk:8.0-noble
 
 # Install required dependencies
 RUN apt update && apt install -y \
