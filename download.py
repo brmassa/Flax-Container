@@ -26,7 +26,6 @@ PLATFORM_MAP = {
     }
 }
 
-
 def download_file(url, filename):
     urllib.request.urlretrieve(url, filename)
 
@@ -37,7 +36,6 @@ def replace_editor_zip(url, platform):
   parsed_url = urllib.parse.urlparse(url)
   new_path = parsed_url.path.replace("/Editor.zip", platform['editor_zip'])
   return urllib.parse.urlunparse((parsed_url.scheme, parsed_url.netloc, new_path, parsed_url.params, parsed_url.query, parsed_url.fragment))
-
 
 def unzip_file(zip_file, extract_path):
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
@@ -72,7 +70,7 @@ def main():
         data = json.loads(response.read())
 
     # Get FLAX_VERSION and PLATFORM from environment or arguments
-    flax_version = os.getenv("FLAX_VERSION") or "1.8"               # Default version
+    flax_version = os.getenv("FLAX_VERSION") or "1.9"               # Default version
     platform_env = os.getenv("OS_PLATFORM")  or "windows_amd64"     # Default platform
     platform = PLATFORM_MAP.get(platform_env)
 

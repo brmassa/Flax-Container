@@ -2,6 +2,6 @@ bin/
 .env
 .vars
 app/
-Linux.zip
-Editor.zip
-FlaxEditorLinux.zip
+app-linux/
+app-windows/
+*.zip
